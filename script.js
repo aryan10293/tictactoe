@@ -2,10 +2,44 @@ const log = console.log
 const gameBoard = function (){
   let a = 0
   let b = 0
-  let body =  document.querySelector('body')
-  let container = document.querySelector('.container')
+  let c = 0
+  const body =  document.querySelector('body')
+  const container = document.querySelector('.container')
+  const start = document.querySelector('.start')
   const reset = document.querySelector('.reset')
-
+  const submit = document.querySelector('.form') 
+  const startingGame = function(){
+    if(c === 0){
+        submit.style.display = 'block'
+        c++
+    } else if (c === 1) {
+        submit.style.display = 'none'
+        c--
+    }
+} 
+const getUsername = function(){
+    const input = document.querySelectorAll('.form input')
+    const player1 = document.getElementById('player1')
+    const player2 = document.getElementById('player2')
+    const usernames = Array.from(input).reduce((acc, input) => ({...acc, [input.id]: input.value }) , {});
+    submit.addEventListener('submit', function(e){
+        e.preventDefault()
+        const user1 = usernames['player1'] = player1.value
+        const user2 = usernames['player2'] = player2.value
+        const play1 = document.querySelector('.user1')
+        const play2 = document.querySelector('.user2')
+        if(user1 == '' || user2 == ''){
+            alert('please enter username')
+        } else {
+        play1.textContent = `X is ${user1}`
+        play2.textContent = `O is ${user2}`
+        container.style.display = 'grid'
+      }
+      
+    })
+    return usernames
+}
+const lol = getUsername()
   const restart =  function(){
     let confirmed =  confirm('Are you sure you want to restart game?')
     b = 0
@@ -28,8 +62,8 @@ const gameBoard = function (){
     }
 } 
   const winGame = function(){
-    const x = 'user x has won the game'
-    const o = 'user o has won the game'
+    const x = `${lol.player1} won the game`
+    const o = `${lol.player2} won the game`
     if((box[0].classList.contains('x') && box[1].classList.contains('x') && box[2].classList.contains('x') ) === true){
         alert(x)
         restart()
@@ -84,7 +118,9 @@ const gameBoard = function (){
     }
 }
 
+
 const resetGame = reset.addEventListener('click', restart)
+const startGame = start.addEventListener('click', startingGame)
   const playerOne = container.addEventListener('click', function(e){
         if(a === 0){
             if(e.target.classList.contains('box')){
@@ -110,16 +146,21 @@ const resetGame = reset.addEventListener('click', restart)
 
     const playGame = function(){
             playerOne
+            startGame
             resetGame
             winGame
+            getUsername()
     }
   return{playGame}
 }
 gameBoard().playGame()
 
-// on reset remove all img elements
-//remove all x and o classes 
-// add back all box classes 
-// ask users if they are sure they want to restart
 
+// add if ai is not checked the same alert will still show
+// ai needs to get all box elements
+// ai needs to select a random box element ans dis play a 'o'
+// add class 'o' to the element
 
+function computer(){
+    
+}
