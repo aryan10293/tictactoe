@@ -137,6 +137,16 @@ const computer = function(){
 
   const resetGame = reset.addEventListener('click', restart)
   const startGame = start.addEventListener('click', startingGame)
+  const disabled = ai.addEventListener('click', function(){
+      const player2 = document.querySelector('#player2')
+      if(ai.checked){
+        player2.setAttribute('disabled', '')
+        player2.value = 'AI'
+      } else if(!ai.checked){
+        player2.disabled = false
+        player2.value = ''
+      }
+  })
   const playerOne = container.addEventListener('click', function(e){
         if(a === 0){
             if(e.target.classList.contains('box')){
@@ -149,6 +159,12 @@ const computer = function(){
         } 
         if(ai.checked){
             computer()
+        } else if(e.target.classList.contains('box')){
+            e.target.classList.add('o')
+            e.target.classList.remove('box')
+            e.target.innerHTML = '<img class="img" class="img-o" src="https://imgprd19.hobbylobby.com/6/f0/3c/6f03cacf1a6d78abcaa8e3655485f2f7c52978fe/700Wx700H-192948-0320-px.jpg">'
+            a = a - 1
+            b++
         }
         winGame()
     })
@@ -157,6 +173,7 @@ const computer = function(){
             playerOne
             startGame
             resetGame
+            disabled
             winGame
             getUsername()
             log()
@@ -164,21 +181,3 @@ const computer = function(){
   return{playGame}
 }
 gameBoard().playGame()
-
-
-// add if ai is not checked the same alert will still show
-// ai needs to get all box elements
-// ai needs to select a random box element ans dis play a 'o'
-// add class 'o' to the element
-// if(e.target.classList.contains('box')){
-//     e.target.classList.add('o')
-//     e.target.classList.remove('box')
-//     e.target.innerHTML = '<img class="img" class="img-o" src="https://imgprd19.hobbylobby.com/6/f0/3c/6f03cacf1a6d78abcaa8e3655485f2f7c52978fe/700Wx700H-192948-0320-px.jpg">'
-//     a = a - 1
-//     b++
-// }
-
-
-// turn it into a array
-// when a box turn into x pop it out of that array
-// when a box turn into o pop it out of that array 
