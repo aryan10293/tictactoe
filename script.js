@@ -8,6 +8,7 @@ const gameBoard = function (){
   const start = document.querySelector('.start')
   const reset = document.querySelector('.reset')
   const submit = document.querySelector('.form') 
+  const ai =  document.querySelector('#ai')
   const startingGame = function(){
     if(c === 0){
         submit.style.display = 'block'
@@ -17,7 +18,7 @@ const gameBoard = function (){
         c--
     }
 } 
-const getUsername = function(){
+  const getUsername = function(){
     const input = document.querySelectorAll('.form input')
     const player1 = document.getElementById('player1')
     const player2 = document.getElementById('player2')
@@ -39,10 +40,11 @@ const getUsername = function(){
     })
     return usernames
 }
-const lol = getUsername()
+  const lol = getUsername()
   const restart =  function(){
     let confirmed =  confirm('Are you sure you want to restart game?')
     b = 0
+    a = 0
     if(confirmed){
         const div = document.querySelectorAll('div')
         const image = document.querySelectorAll('.img')
@@ -117,10 +119,24 @@ const lol = getUsername()
         restart()
     }
 }
+const computer = function(){
+    const box = document.querySelectorAll('.box')
+    let array = Array.from(box)
+    const random = array[Math.floor(Math.random() * array.length)]
+    for(let i = 0; i < box.length; i++){
+        if(random.classList.contains('x') || random.classList.contains('o')){
+            array.splice(array.indexOf(random), 1)
+        } else if (a === 1) {
+            random.classList.add('o')
+            random.classList.remove('box')
+            random.innerHTML = '<img class="img" class="img-o" src="https://imgprd19.hobbylobby.com/6/f0/3c/6f03cacf1a6d78abcaa8e3655485f2f7c52978fe/700Wx700H-192948-0320-px.jpg">'
+            a = a - 1
+        }
+    }
+}
 
-
-const resetGame = reset.addEventListener('click', restart)
-const startGame = start.addEventListener('click', startingGame)
+  const resetGame = reset.addEventListener('click', restart)
+  const startGame = start.addEventListener('click', startingGame)
   const playerOne = container.addEventListener('click', function(e){
         if(a === 0){
             if(e.target.classList.contains('box')){
@@ -129,17 +145,10 @@ const startGame = start.addEventListener('click', startingGame)
                 e.target.innerHTML = '<img class="img" src="https://texas.thefootballbrainiacs.com/wp-content/uploads/2016/01/X.jpg">'
                 a = a + 1
                 b++
-                log(a)
             }
         } 
-        if(a === 1){
-            if(e.target.classList.contains('box')){
-                e.target.classList.add('o')
-                e.target.classList.remove('box')
-                e.target.innerHTML = '<img class="img" class="img-o" src="https://imgprd19.hobbylobby.com/6/f0/3c/6f03cacf1a6d78abcaa8e3655485f2f7c52978fe/700Wx700H-192948-0320-px.jpg">'
-                a = a - 1
-                b++
-            }
+        if(ai.checked){
+            computer()
         }
         winGame()
     })
@@ -150,6 +159,7 @@ const startGame = start.addEventListener('click', startingGame)
             resetGame
             winGame
             getUsername()
+            log()
     }
   return{playGame}
 }
@@ -160,7 +170,15 @@ gameBoard().playGame()
 // ai needs to get all box elements
 // ai needs to select a random box element ans dis play a 'o'
 // add class 'o' to the element
+// if(e.target.classList.contains('box')){
+//     e.target.classList.add('o')
+//     e.target.classList.remove('box')
+//     e.target.innerHTML = '<img class="img" class="img-o" src="https://imgprd19.hobbylobby.com/6/f0/3c/6f03cacf1a6d78abcaa8e3655485f2f7c52978fe/700Wx700H-192948-0320-px.jpg">'
+//     a = a - 1
+//     b++
+// }
 
-function computer(){
-    
-}
+
+// turn it into a array
+// when a box turn into x pop it out of that array
+// when a box turn into o pop it out of that array 
