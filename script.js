@@ -176,7 +176,6 @@ const computer = function(){
             disabled
             winGame
             getUsername()
-            log()
     }
   return{playGame}
 }
